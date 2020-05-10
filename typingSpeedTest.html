@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&family=Jost:wght@200&display=swap" rel="stylesheet">
+<style>
+	*{padding:0; margin:0; box-sizing: border-box; font-family: 'Jost', sans-serif;
+font-family: 'Josefin Sans', sans-serif;}
+	.mainDiv{
+		width:100%;
+		height: 100vh;
+		position: relative;
+		background: #3498db;
+	}
+
+	.centerDiv{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		text-align: center;
+	}
+
+	h1{ text-transform: capitalize;
+	text-align: center;
+	margin-bottom: 20px;
+	color: #ecf6f0;
+	text-shadow: 1px 2px 3px #2980b9;
+	font-size: 2.1rem; }
+
+	h2{ text-align: center; }
+
+	textarea{
+		background-color: #434;
+		box-shadow: 0 0 1px rgba(0,0,0,0.2);
+		border-radius: 10px 50px 0 0;
+		border: 10px solid #34490e;
+		color: white;
+		font-size: 1.3rem;
+	}
+
+	.mainbtn{
+		padding: 10px 20px;
+		border-radius: 20px;
+		border: 5px solid #2980b9;
+		background: #ecf0f1;
+		font-size:1rem;
+	}
+</style>
+</head>
+<body>
+
+	<div class="mainDiv">
+		<div class="centerDiv">
+			<h1>Welcome to Typing Speed TEST</h1>
+			<h2 id="msg"></h2>
+			<br>
+			<textarea id="mywords" cols="100" rows="10" placeholder="Remember ,be nice!"></textarea>
+			<br>
+			<button id="btn" class="mainbtn">Start</button>
+		</div>
+	</div>
+	<script>
+		
+		const setOfWords=[
+		"My name is INDU KUMARI and i am a student.",
+		"I just try to create my own typing speed test project.",
+		"I have not any idea about to create typing speed test,but watching video on youtube and trying."];
+
+		const msg=document.getElementById('msg');
+		const typeWords=document.getElementById('mywords');
+		const btn=document.getElementById('btn');
+		let startTime, endTime;
+
+        const playGame=()=>{
+        	let randomNumber=Math.floor(Math.random()*setOfWords.length);
+        	msg.innerText=setOfWords[randomNumber];
+        	let date=new Date();
+        	startTime=date.getTime();
+        	btn.innerText="Done";
+        	//console.log(randomNumber);
+        }
+
+        const endPlay=()=>{
+        	let date=new Date();
+        	endTime=date.getTime();
+        	let totalTime=((endTime-startTime)/1000);
+        	console.log(totalTime);
+        	let totalStr=typeWords.value;
+        	let wordCount=wordCounter(totalStr);
+        	let speed=Math.round((wordCount/totalTime)*60);
+            let finalMsg="You typed total at " +speed+ "words per minutes";
+            finalMsg +=compareWords(msg.innerText,totalStr);
+
+            msg.innerText=finalMsg;
+
+        	        }
+        	        const compareWords=(str1,str2)=>{
+        	        	let words1=str1.split(" ");
+        	        	let words2=str2.split(" ");
+        	        	let cnt=0;
+  //arrayName then for each then it will take whole function with value and index no. of that array
+
+  words1.forEach(function(item,index){
+  	if(item==words2[index]){
+  		cnt++;
+  	}
+  })
+ let errorWords=(words1.length-cnt);
+ return(cnt + " correct out of " +words1.length+"words and the total number of error are "+ errorWords+ ".");
+
+
+        	        }
+
+        	 const wordCounter=(str)=>{
+        	 	let response=str.split(" ").length;
+        	 	console.log(response);
+        	 	return response;
+        	 }       
+
+
+
+
+		btn.addEventListener('click',function(){
+			if(this.innerText=='Start'){
+				typeWords.disabled=false;
+				playGame();
+			}
+			else if(this.innerText=="Done"){
+				typeWords.disabled=true;
+				btn.innerText="Start";
+				endPlay();
+			}
+		})
+
+
+	</script>
+
+	Dynamic typing test
+1:When user pressed start button then only active the textarea else disabled it and vice-versa.
+2:Every time a new set of lines on top.Whenever a start button is pressed.NOT the Done one.
+3:get the time and change the button text to Done.
+4:get the end time when user clicked on Done button.Find the total time taken.
+5:Find the total words on the softWords.
+6:Find the speed of the user and show it on top when user clicked on Done.
+7:Then call the compareWords fun and find how many of the words are matching and how many not.Display the result on top with speed.
+</body>
+</html>
